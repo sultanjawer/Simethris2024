@@ -12,21 +12,11 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\DataUser;
+use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-	/*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
 	use AuthenticatesUsers;
 
 	/**
@@ -63,17 +53,13 @@ class LoginController extends Controller
 	 */
 	public function login(Request $request)
 	{
-
 		if ($request->string('roleaccess') == '2') {
-
 			try {
 				$options = array(
 					'soap_version' => SOAP_1_1,
 					'exceptions' => true,
 					'trace' => 1,
 					'cache_wsdl' => WSDL_CACHE_MEMORY,
-					// 'login' => $system['webuser'],
-					// 'password' => $system['webpass'],
 					'connection_timeout' => 25,
 					'style' => SOAP_RPC,
 					'use' => SOAP_ENCODED,
@@ -92,12 +78,9 @@ class LoginController extends Controller
 				Log::error('Soap Exception: ' . $e->getMessage());
 				throw new \Exception('Problem with SOAP call');
 			}
-			//$res = json_decode(json_encode((array)simplexml_load_string($response)),true);
 
 			$res = simplexml_load_string($response);
-			// dd((string)$res->riph->company_profile->fax);
 			if ((string)$res->keterangan == 'SUCCESS') {
-
 				$user = User::firstOrCreate(
 					['username' => $request->string('username'), 'roleaccess' => 2],
 					['name' => (string)$res->riph->user_profile->nama, 'password' => Hash::make($request->string('password')), 'email' => (string)$res->riph->user_profile->email]
@@ -129,17 +112,11 @@ class LoginController extends Controller
 							'email_company' => (string)$res->riph->company_profile->email
 						]
 					);
-					// if ($datauser) dd('updated...'); else dd('update or create fail');
 				};
 			}
 		}
 
-
 		$this->validateLogin($request);
-
-		// If the class is using the ThrottlesLogins trait, we can automatically throttle
-		// the login attempts for this application. We'll key this by the username and
-		// the IP address of the client making these requests into this application.
 		if (
 			method_exists($this, 'hasTooManyLoginAttempts') &&
 			$this->hasTooManyLoginAttempts($request)
@@ -156,12 +133,7 @@ class LoginController extends Controller
 
 			return $this->sendLoginResponse($request);
 		}
-
-		// If the login attempt was unsuccessful we will increment the number of attempts
-		// to login and redirect the user back to the login form. Of course, when this
-		// user surpasses their maximum number of attempts they will get locked out.
 		$this->incrementLoginAttempts($request);
-
 		return $this->sendFailedLoginResponse($request);
 	}
 
