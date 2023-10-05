@@ -1,0 +1,6 @@
+/node_modules
+/public/storage
+/public/storage*
+!/vendor
+!/vendor/laravel/ui/auth-backend
+.env
