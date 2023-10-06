@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Verifikator\SklOldController;
 
 
 Route::get('/', function () {
@@ -359,6 +358,13 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 		Route::post('profile', 'ChangePasswordController@updateProfile')->name('password.updateProfile');
 		Route::post('profile/destroy', 'ChangePasswordController@destroy')->name('password.destroyProfile');
 	}
+});
+
+Route::group(['prefix' => 'wilayah', 'as' => 'wilayah.', 'namespace' => 'Wilayah', 'middleware' => ['auth']], function () {
+	Route::get('getAllProvinsi', 'GetWilayahController@getAllProvinsi');
+	Route::get('getKabupatenByProvinsi/{provinsiId}', 'GetWilayahController@getKabupatenByProvinsi');
+	Route::get('getKecamatanByKabupaten/{id}', 'GetWilayahController@getKecamatanByKabupaten');
+	Route::get('getDesaByKec/{kecamatanId}', 'GetWilayahController@getDesaByKecamatan');
 });
 
 Route::group(['prefix' => 'digisign', 'as' => 'digisign.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {

@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Api\HelperController;
 use App\Http\Controllers\Api\AnggotaMitraController;
 use App\Http\Controllers\Api\GetWilayahController;
@@ -47,7 +50,7 @@ Route::group(['as' => 'api.', 'namespace' => 'Api', 'middleware' => ['auth:sanct
 
 	//Data wilayah
 	Route::get('getAllProvinsi', 'GetWilayahController@getAllProvinsi');
-	Route::get('getKabupatenByProvinsi/{id}', 'GetWilayahController@getKabupatenByProvinsi');
+	Route::get('getKabupatenByProvinsi/{provinsiId}', 'GetWilayahController@getKabupatenByProvinsi');
 	Route::get('getKecamatanByKabupaten/{id}', 'GetWilayahController@getKecamatanByKabupaten');
 	Route::get('getDesaByKecamatan/{id}', 'GetWilayahController@getDesaByKecamatan');
 

@@ -29,9 +29,8 @@
 			@php($cntRecomendations = 0)
 			@php($getRecomendations = null)
 		@endif
-		@php
-			[$text, $author] = explode('-', $quote);
-		@endphp
+
+
 		<div class="row mb-5">
 			<div class="col text-center">
 				<h1 class="hidden-md-down">Selamat Datang di Simethris,</h1><br>
@@ -39,10 +38,10 @@
 				<h2 class="display-4 hidden-sm-up">Hallo, <span class="fw-700">{{ Auth::user()->name }}</span></h2>
 				<h4 class="hidden-md-down">
 					<blockquote class="blockquote text-center">
-						{{-- <p class="mb-0">{{$text}}</p> --}}
-						{{-- <footer class="blockquote-footer"><cite title="Source Title">{!! trim($author) !!}</cite></footer> --}}
+						<p class="mb-0">{!! $text !!}</p>
+						<footer class="blockquote-footer"><cite title="Source Title">{!! $author !!}</cite></footer>
 					</blockquote>
-					{{-- <p class="text-muted">{!! $quote !!}</p> --}}
+					<p class="text-muted"></p>
 				</h4>
 			</div>
 		</div>
